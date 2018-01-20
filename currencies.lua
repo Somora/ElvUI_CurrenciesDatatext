@@ -11,7 +11,7 @@ local version = GetAddOnMetadata("ElvUI_CurrenciesDatatext", "Version")
 
 local currencies = {
 --		[1155] = true, 
-1155, 1275, 1299, 1356, 1357, 1355, 1342, 1226, 1220, 1273, 1154, 1149, 1268, 1508,1416,	-- Legion
+1155, 1275, 1299, 1356, 1357, 1355, 1342, 1226, 1220, 1273, 1154, 1149, 1268, 1508, 1416,	-- Legion
 823, 944, 980, 824, 1101, 1129, 994, 														-- Warlords of Draenor - 1
 614, 615, 1166, 1191, 																		-- Dungeon & Raid - 8
 390, 392, 391, 																				-- Player v. Player - 12
@@ -1113,6 +1113,7 @@ local function OnEnter(self)
 				if getCurinfo(1508)[7] then
 					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1508)[2]).." "..getCurinfo(1508)[1], getCurinfo(1508)[3].."/"..getCurinfo(1508)[6], r1, g1, b1, r1, g1, b1)
 				end
+			end	
 			if not GetOption("Legion") or not GetOption(1416) then
 				if getCurinfo(1416)[7] then
 					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1416)[2]).." "..getCurinfo(1416)[1], getCurinfo(1416)[3].."/"..getCurinfo(1416)[6], r1, g1, b1, r1, g1, b1)
