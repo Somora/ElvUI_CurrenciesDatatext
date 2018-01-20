@@ -11,14 +11,14 @@ local version = GetAddOnMetadata("ElvUI_CurrenciesDatatext", "Version")
 
 local currencies = {
 --		[1155] = true, 
-1155, 1275, 1299, 1356, 1357, 1355, 1342, 1226, 1220, 1273, 1154, 1149, 1268, 1508,	-- Legion
-823, 944, 980, 824, 1101, 1129, 994, 												-- Warlords of Draenor - 1
-614, 615, 1166, 1191, 																-- Dungeon & Raid - 8
-390, 392, 391, 																		-- Player v. Player - 12
-789, 697, 738, 752, 777, 776, 														-- Mists of Pandaria - 15
-361, 																				-- Cataclysm - 21
-241, 61, 515, 81, 402, 416, 														-- Miscellaneous - 22
-384, 398, 393, 394, 400, 397, 401, 385, 399, 754, 676, 677, 829, 821, 828} 			-- Archaeology - 28
+1155, 1275, 1299, 1356, 1357, 1355, 1342, 1226, 1220, 1273, 1154, 1149, 1268, 1508,1416,	-- Legion
+823, 944, 980, 824, 1101, 1129, 994, 														-- Warlords of Draenor - 1
+614, 615, 1166, 1191, 																		-- Dungeon & Raid - 8
+390, 392, 391, 																				-- Player v. Player - 12
+789, 697, 738, 752, 777, 776, 																-- Mists of Pandaria - 15
+361, 																						-- Cataclysm - 21
+241, 61, 515, 81, 402, 416, 																-- Miscellaneous - 22
+384, 398, 393, 394, 400, 397, 401, 385, 399, 754, 676, 677, 829, 821, 828} 					-- Archaeology - 28
 
 local elvProfileDB = ElvPrivateDB["profiles"][E.myname.." - "..E.myrealm]
 if elvProfileDB["ElvUI_Currencies"] ~= nil then
@@ -57,6 +57,7 @@ if elvProfileDB["ElvUI_Currencies"] ~= nil then
 		ElvCharacterDB["ElvUI_Currencies"][1149]  = elvProfileDB["ElvUI_Currencies"][L["Legion"]][1149]["visible"]  or true -- Sightless Eye
 		ElvCharacterDB["ElvUI_Currencies"][1268]  = elvProfileDB["ElvUI_Currencies"][L["Legion"]][1268]["visible"]  or true -- Timeworn Artifact
 		ElvCharacterDB["ElvUI_Currencies"][1508]  = elvProfileDB["ElvUI_Currencies"][L["Legion"]][1508]["visible"]  or true -- Veiled Argunite
+		ElvCharacterDB["ElvUI_Currencies"][1416]  = elvProfileDB["ElvUI_Currencies"][L["Legion"]][1416]["visible"]  or true -- Coins of Air
 		-- wod
 		ElvCharacterDB["ElvUI_Currencies"][823]  = elvProfileDB["ElvUI_Currencies"][L["WoD"]][823]["visible"]  or true -- Apexis Crystal
 		ElvCharacterDB["ElvUI_Currencies"][944]  = elvProfileDB["ElvUI_Currencies"][L["WoD"]][944]["visible"]  or true -- Artifact Fragment
@@ -154,7 +155,7 @@ V["ElvUI_Currencies"] = {
 	[1149] = true, -- Sightless Eye, 1149
 	[1268] = true, -- Timeworn Artifact, 1268
 	[1508] = true, -- Veiled Argunite, 1508
-	
+	[1416] = true, -- Coins of Air, 1416
 	[823] = true, -- Apexis Crystal
 	[944] = true, -- Artifact Fragment
 	[980] = true, -- Dingy Iron Coins
@@ -261,7 +262,7 @@ local menu = {
 			{ text = L["Show Legion Currencies"], checked = function() return GetOption("Legion") end, func = function() ToggleOption("Legion") end },
 			{ text = ' - '..L["Show"]..' '..L["Ancient Mana"], checked = function() return GetOption(1155) end, func = function() ToggleOption(1155) end },
 			{ text = ' - '..L["Show"]..' '..L["Curious Coin"], checked = function() return GetOption(1275) end, func = function() ToggleOption(1275) end },
-			{ text = ' - '..L["Show"]..' '..L["Bralwer's Gold"], checked = function() return GetOption(1299) end, func = function() ToggleOption(1299) end },
+			{ text = ' - '..L["Show"]..' '..L["Brawler's Gold"], checked = function() return GetOption(1299) end, func = function() ToggleOption(1299) end },
 			{ text = ' - '..L["Show"]..' '..L["Echoes of Battle"], checked = function() return GetOption(1356) end, func = function() ToggleOption(1356) end },
 			{ text = ' - '..L["Show"]..' '..L["Echoes of Domination"], checked = function() return GetOption(1357) end, func = function() ToggleOption(1357) end },
 			{ text = ' - '..L["Show"]..' '..L["Felessence"], checked = function() return GetOption(1355) end, func = function() ToggleOption(1355) end },
@@ -273,6 +274,7 @@ local menu = {
 			{ text = ' - '..L["Show"]..' '..L["Sightless Eye"], checked = function() return GetOption(1149) end, func = function() ToggleOption(1149) end },
 			{ text = ' - '..L["Show"]..' '..L["Timeworn Artifact"], checked = function() return GetOption(1268) end, func = function() ToggleOption(1268) end },
 			{ text = ' - '..L["Show"]..' '..L["Veiled Argunite"], checked = function() return GetOption(1508) end, func = function() ToggleOption(1508) end },
+			{ text = ' - '..L["Show"]..' '..L["Coins of Air"], checked = function() return GetOption(1416) end, func = function() ToggleOption(1416) end },
         } 
     },
 	{ text = L["WoD"], hasArrow = true, notCheckable = true,
@@ -531,6 +533,17 @@ local function OnEvent(self, event, ...)
 				displayString = displayString..str
 			end
 			if index == 1508 and (GetOption(1508) and GetOption("Legion")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
+			if index == 1416 and (GetOption(1416) and GetOption("Legion")) then
 				local str
 				if GetOption("icons") then
 					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
@@ -1026,7 +1039,7 @@ local function OnEnter(self)
 		local r1, g1, b1, r2, g2, b2 = HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b;
 		DT:SetupTooltip(self)
 		if UnitLevel('player') >= 100 then -- Legion
-			if not GetOption("Legion") or (not GetOption(1155) and getCurinfo(1155)[7]) or (not GetOption(1275) and getCurinfo(1275)[7]) or (not GetOption(1299) and getCurinfo(1299)[7]) or (not GetOption(1356) and getCurinfo(1356)[7]) or (not GetOption(1357) and getCurinfo(1357)[7]) or (not GetOption(1355) and getCurinfo(1355)[7]) or (not GetOption(1342) and getCurinfo(1342)[7]) or (not GetOption(1226) and getCurinfo(1226)[7]) or (not GetOption(1220) and getCurinfo(1220)[7]) or (not GetOption(1273) and getCurinfo(1273)[7]) or (not GetOption(1154) and getCurinfo(1154)[7]) or (not GetOption(1149) and getCurinfo(1149)[7]) or (not GetOption(1268) and getCurinfo(1268)[7]) or (not GetOption(1508) and getCurinfo(1508)[7]) then
+			if not GetOption("Legion") or (not GetOption(1155) and getCurinfo(1155)[7]) or (not GetOption(1275) and getCurinfo(1275)[7]) or (not GetOption(1299) and getCurinfo(1299)[7]) or (not GetOption(1356) and getCurinfo(1356)[7]) or (not GetOption(1357) and getCurinfo(1357)[7]) or (not GetOption(1355) and getCurinfo(1355)[7]) or (not GetOption(1342) and getCurinfo(1342)[7]) or (not GetOption(1226) and getCurinfo(1226)[7]) or (not GetOption(1220) and getCurinfo(1220)[7]) or (not GetOption(1273) and getCurinfo(1273)[7]) or (not GetOption(1154) and getCurinfo(1154)[7]) or (not GetOption(1149) and getCurinfo(1149)[7]) or (not GetOption(1268) and getCurinfo(1268)[7]) or (not GetOption(1508) and getCurinfo(1508)[7]) or (not GetOption(1416) and getCurinfo(1416)[7]) then
 				DT.tooltip:AddLine(L["Legion"], r2, g2, b2)
 			end
 			if not GetOption("Legion") or not GetOption(1155) then
@@ -1100,8 +1113,12 @@ local function OnEnter(self)
 				if getCurinfo(1508)[7] then
 					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1508)[2]).." "..getCurinfo(1508)[1], getCurinfo(1508)[3].."/"..getCurinfo(1508)[6], r1, g1, b1, r1, g1, b1)
 				end
+			if not GetOption("Legion") or not GetOption(1416) then
+				if getCurinfo(1416)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1416)[2]).." "..getCurinfo(1416)[1], getCurinfo(1416)[3].."/"..getCurinfo(1416)[6], r1, g1, b1, r1, g1, b1)
+				end	
 			end
-			if not GetOption("Legion") or (not GetOption(1155) and getCurinfo(1155)[7]) or (not GetOption(1275) and getCurinfo(1275)[7]) or (not GetOption(1299) and getCurinfo(1299)[7]) or (not GetOption(1356) and getCurinfo(1356)[7]) or (not GetOption(1357) and getCurinfo(1357)[7]) or (not GetOption(1355) and getCurinfo(1355)[7]) or (not GetOption(1342) and getCurinfo(1342)[7]) or (not GetOption(1226) and getCurinfo(1226)[7]) or (not GetOption(1220) and getCurinfo(1220)[7]) or (not GetOption(1273) and getCurinfo(1273)[7]) or (not GetOption(1154) and getCurinfo(1154)[7]) or (not GetOption(1149) and getCurinfo(1149)[7]) or (not GetOption(1268) and getCurinfo(1268)[7]) or (not GetOption(1508) and getCurinfo(1508)[7]) then
+			if not GetOption("Legion") or (not GetOption(1155) and getCurinfo(1155)[7]) or (not GetOption(1275) and getCurinfo(1275)[7]) or (not GetOption(1299) and getCurinfo(1299)[7]) or (not GetOption(1356) and getCurinfo(1356)[7]) or (not GetOption(1357) and getCurinfo(1357)[7]) or (not GetOption(1355) and getCurinfo(1355)[7]) or (not GetOption(1342) and getCurinfo(1342)[7]) or (not GetOption(1226) and getCurinfo(1226)[7]) or (not GetOption(1220) and getCurinfo(1220)[7]) or (not GetOption(1273) and getCurinfo(1273)[7]) or (not GetOption(1154) and getCurinfo(1154)[7]) or (not GetOption(1149) and getCurinfo(1149)[7]) or (not GetOption(1268) and getCurinfo(1268)[7]) or (not GetOption(1508) and getCurinfo(1508)[7]) or (not GetOption(1416) and getCurinfo(1416)[7]) then
 				DT.tooltip:AddLine("  ")
 			end
 		end
@@ -1428,6 +1445,7 @@ Shadowy Coins							Legion 500
 Sightless Eye							Legion 5000
 Timeworn Artifact						Legion 1000
 Veiled Argunite							Legion 2000
+Coins of Air							Legion 2000000
 
 Warlords of Draenor
 Apexis Crystal							Warlords of Draenor

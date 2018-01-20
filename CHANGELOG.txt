@@ -1,3 +1,6 @@
+v4.05
+- Added Currencies: Coins of Air
+
 v4.04
 - Added Currencies: Veiled Argunite 
 
