@@ -218,21 +218,37 @@ V["ElvUI_Currencies"] = {
 	[402] = true, -- Ironpaw Token
 	
 	-- Archaeology
+	---- Vanilla
 	[384] = true, -- Dwarf Archaeology Fragment
-	[398] = true, -- Draenei Archaeology Fragment
 	[393] = true, -- Fossil Archaeology Fragment
-	[400] = true, -- Nerubian Archaeology Fragment
 	[394] = true, -- Night Elf Archaeology Fragment
-	[397] = true, -- Orc Archaeology Fragment
-	[401] = true, -- Tol'vir Archaeology Fragment
 	[385] = true, -- Troll Archaeology Fragment
+	
+	---- Burning Crusade
+	[398] = true, -- Draenei Archaeology Fragment
+	[397] = true, -- Orc Archaeology Fragment
+	
+	---- Wrath of the Lich King
+	[400] = true, -- Nerubian Archaeology Fragment
 	[399] = true, -- Vrykul Archaeology Fragment
+	
+	---- Cataclysm
+	[401] = true, -- Tol'vir Archaeology Fragment
+	
+	---- Mists of Pandaria
 	[754] = true, -- Mantid Archaeology Fragment
 	[677] = true, -- Mogu Archaeology Fragment
 	[676] = true, -- Pandaren Archaeology Fragment
+	
+	---- Warlords of Draenor
 	[829] = true, -- Arakkoa Archaeology Fragment
 	[821] = true, -- Draenor Clans Archaeology Fragment
 	[828] = true, -- Ogre Archaeology Fragment
+	
+	---- Legion
+	[1174] = true, -- Demonic Archaeology Fragment
+	[1172] = true, -- Highborne Archaeology Fragment
+	[1173] = true, -- Highmountain Tauren Archaeology Fragment
 }
 
 StaticPopupDialogs["translatorsNeeded"] = {
@@ -405,6 +421,9 @@ local menu = {
 			{ text = ' - '..L["Show"]..' '..L["Arakkoa Archaeology Fragment"], checked = function() return GetOption(829) end, func = function() ToggleOption(829) end },
 			{ text = ' - '..L["Show"]..' '..L["Draenor Clans Archaeology Fragment"], checked = function() return GetOption(821) end, func = function() ToggleOption(821) end },
 			{ text = ' - '..L["Show"]..' '..L["Ogre Archaeology Fragment"], checked = function() return GetOption(828) end, func = function() ToggleOption(828) end },
+			{ text = ' - '..L["Show"]..' '..L["Demonic Archaeology Fragment"], checked = function() return GetOption(1174) end, func = function() ToggleOption(1174) end },
+			{ text = ' - '..L["Show"]..' '..L["Highborne Archaeology Fragment"], checked = function() return GetOption(1172) end, func = function() ToggleOption(1172) end },
+			{ text = ' - '..L["Show"]..' '..L["Highmountain Tauren Archaeology Fragment"], checked = function() return GetOption(1173) end, func = function() ToggleOption(1173) end },
 		}
 	},
 	{ text = L["Show Icons"], checked = function() return GetOption("icons") end, func = function() ToggleOption("icons") end },
@@ -1215,6 +1234,45 @@ local function OnEvent(self, event, ...)
 				end
 				displayString = displayString..str
 			end
+			
+			-- Demonic Archaeology Fragment
+			if index == 1174 and (GetOption(1174) and GetOption("Arch")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
+			
+			-- Highborne Archaeology Fragment
+			if index == 1172 and (GetOption(1172) and GetOption("Arch")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
+			
+			-- Highmountain Tauren Archaeology Fragment
+			if index == 1173 and (GetOption(1173) and GetOption("Arch")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
 		end
 	end	
 	if self then
@@ -1625,7 +1683,7 @@ local function OnEnter(self)
 		
 		-- Archaeology
 		if UnitLevel("player") >= 1 then  
-			if not GetOption("Arch") or (not GetOption(384) and getCurinfo(384)[7]) or (not GetOption(398) and getCurinfo(398)[7]) or (not GetOption(393) and getCurinfo(393)[7]) or (not GetOption(394) and getCurinfo(394)[7]) or (not GetOption(400) and getCurinfo(400)[7]) or (not GetOption(397) and getCurinfo(397)[7]) or (not GetOption(401) and getCurinfo(401)[7]) or (not GetOption(385) and getCurinfo(385)[7]) or (not GetOption(399) and getCurinfo(399)[7]) or (not GetOption(754) and getCurinfo(754)[7]) or (not GetOption(676) and getCurinfo(676)[7]) or (not GetOption(677) and getCurinfo(677)[7]) or (not GetOption(829) and getCurinfo(829)[7]) or (not GetOption(821) and getCurinfo(821)[7]) or (not GetOption(828) and getCurinfo(828)[7]) then
+			if not GetOption("Arch") or (not GetOption(384) and getCurinfo(384)[7]) or (not GetOption(398) and getCurinfo(398)[7]) or (not GetOption(393) and getCurinfo(393)[7]) or (not GetOption(394) and getCurinfo(394)[7]) or (not GetOption(400) and getCurinfo(400)[7]) or (not GetOption(397) and getCurinfo(397)[7]) or (not GetOption(401) and getCurinfo(401)[7]) or (not GetOption(385) and getCurinfo(385)[7]) or (not GetOption(399) and getCurinfo(399)[7]) or (not GetOption(754) and getCurinfo(754)[7]) or (not GetOption(676) and getCurinfo(676)[7]) or (not GetOption(677) and getCurinfo(677)[7]) or (not GetOption(829) and getCurinfo(829)[7]) or (not GetOption(821) and getCurinfo(821)[7]) or (not GetOption(828) and getCurinfo(828)[7])or (not GetOption(1174) and getCurinfo(1174)[7])or (not GetOption(1172) and getCurinfo(1172)[7])or (not GetOption(1173) and getCurinfo(1173)[7]) then
 				DT.tooltip:AddLine(L["Arch"], r2, g2, b2)
 			end
 			
@@ -1734,7 +1792,28 @@ local function OnEnter(self)
 				end
 			end
 			
-						if not GetOption("Arch") or (not GetOption(384) and getCurinfo(384)[7]) or (not GetOption(398) and getCurinfo(398)[7]) or (not GetOption(393) and getCurinfo(393)[7]) or (not GetOption(394) and getCurinfo(394)[7]) or (not GetOption(400) and getCurinfo(400)[7]) or (not GetOption(397) and getCurinfo(397)[7]) or (not GetOption(401) and getCurinfo(401)[7]) or (not GetOption(385) and getCurinfo(385)[7]) or (not GetOption(399) and getCurinfo(399)[7]) or (not GetOption(754) and getCurinfo(754)[7]) or (not GetOption(676) and getCurinfo(676)[7]) or (not GetOption(677) and getCurinfo(677)[7]) or (not GetOption(829) and getCurinfo(829)[7]) or (not GetOption(821) and getCurinfo(821)[7]) or (not GetOption(828) and getCurinfo(828)[7]) then
+			-- Demonic Archaeology Fragment
+			if not GetOption("Arch") or not GetOption(1174) then
+				if getCurinfo(1174)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1174)[2]).." "..getCurinfo(1174)[1], getCurinfo(1174)[3].."/"..getCurinfo(1174)[6], r1, g1, b1, r1, g1, b1)
+				end
+			end
+			
+			-- Highborne Archaeology Fragment
+			if not GetOption("Arch") or not GetOption(1172) then
+				if getCurinfo(1172)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1172)[2]).." "..getCurinfo(1172)[1], getCurinfo(1172)[3].."/"..getCurinfo(1172)[6], r1, g1, b1, r1, g1, b1)
+				end
+			end
+			
+			-- Highmountain Tauren Archaeology Fragment
+			if not GetOption("Arch") or not GetOption(1173) then
+				if getCurinfo(1173)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1173)[2]).." "..getCurinfo(1173)[1], getCurinfo(1173)[3].."/"..getCurinfo(1173)[6], r1, g1, b1, r1, g1, b1)
+				end
+			end
+			
+						if not GetOption("Arch") or (not GetOption(384) and getCurinfo(384)[7]) or (not GetOption(398) and getCurinfo(398)[7]) or (not GetOption(393) and getCurinfo(393)[7]) or (not GetOption(394) and getCurinfo(394)[7]) or (not GetOption(400) and getCurinfo(400)[7]) or (not GetOption(397) and getCurinfo(397)[7]) or (not GetOption(401) and getCurinfo(401)[7]) or (not GetOption(385) and getCurinfo(385)[7]) or (not GetOption(399) and getCurinfo(399)[7]) or (not GetOption(754) and getCurinfo(754)[7]) or (not GetOption(676) and getCurinfo(676)[7]) or (not GetOption(677) and getCurinfo(677)[7]) or (not GetOption(829) and getCurinfo(829)[7]) or (not GetOption(821) and getCurinfo(821)[7]) or (not GetOption(828) and getCurinfo(828)[7]) or (not GetOption(1174) and getCurinfo(1174)[7]) or (not GetOption(1172) and getCurinfo(1172)[7]) or (not GetOption(1173) and getCurinfo(1173)[7]) then
 				DT.tooltip:AddLine("  ")
 			end
 		end
@@ -1783,7 +1862,7 @@ DT:RegisterDatatext('Currencies', {'PLAYER_LOGIN', 'PLAYER_ENTERING_WORLD', 'PLA
 --[[
 Legion
 ------
-Ancient Mana							Legion 300 (can be increased in-game to a total of 2000)
+Ancient Mana							Legion 300 (can be increased in-game)
 Brawler's Gold							Legion 5000
 Curious Coin							Legion 
 Nethershard								Legion
@@ -1792,7 +1871,7 @@ Seal of Broken Fate						Legion 6
 Shadowy Coins							Legion 500
 Sightless Eye							Legion 5000
 Timeworn Artifact						Legion 1000
-Veiled Argunite							Legion 1500
+Veiled Argunite							Legion 2000
 Coins of Air							Legion 2000000
 Lingering Soul Fragment					Legion 40 (Weekly 20)
 Wakening Essence						Legion
@@ -1808,7 +1887,7 @@ Artifact Fragment						Warlords of Draenor	1000
 Dingy Iron Coins						Warlords of Draenor	20000
 Garrison Resources						Warlords of Draenor	10000
 Seal of Tempered Fate					Warlords of Draenor	20
-Seal of Inevitable Fate					Warlords of Draenor	10
+Seal of Inevitable Fate					Warlords of Draenor	20
 Oil										Warlords of Draenor	100000
 
 Mists of Pandaria
@@ -1829,7 +1908,7 @@ Dungeon & Raid
 Essence of Corrupted Deathwing			Dungeon and Raid
 Mote of Darkness						Dungeon and Raid
 Timewarped Bagde						Dungeon and Raid
-Valor									Dungeon and Raid	5000 (This currency is no longer in the game.)
+Valor									Dungeon and Raid	(This currency is no longer in the game.)
 
 Miscellaneous
 -------------
@@ -1842,25 +1921,28 @@ Mark of the World Tree					Miscellaneous
 
 Player v. Player
 ----------------
-Conquest Points							Player vs. Player	31700 weekly
-Honor Points							Player vs. Player	4000
+Conquest Points							Player vs. Player	(This currency is no longer in the game.)
+Honor Points							Player vs. Player	(This currency is no longer in the game.)
 Tol Barad Commendation					Player vs. Player
 
 Archaeology
 -----------
-Arakkoa Archaeology Fragment			Archaeology			250
-Draenei Archaeology Fragment			Archaeology			200
-Draenor Clans Archaeology Fragment		Archaeology			250
-Dwarf Archaeology Fragment				Archaeology			200
-Fossil Archaeology Fragment				Archaeology			200
-Mantid Archaeology Fragment				Archaeology			200
-Mogu Archaeology Fragment				Archaeology			200
-Nerubian Archaeology Fragment			Archaeology			200
-Night Elf Archaeology Fragment			Archaeology			200
-Ogre Archaeology Fragment				Archaeology			250
-Orc Archaeology Fragment				Archaeology			200
-Pandaren Archaeology Fragment			Archaeology			200
-Tol'vir Archaeology Fragment			Archaeology			200
-Troll Archaeology Fragment				Archaeology			200
-Vrykul Archaeology Fragment				Archaeology			200
+Arakkoa Archaeology Fragment				Archaeology			250
+Draenei Archaeology Fragment				Archaeology			200
+Draenor Clans Archaeology Fragment			Archaeology			250
+Dwarf Archaeology Fragment					Archaeology			200
+Fossil Archaeology Fragment					Archaeology			200
+Mantid Archaeology Fragment					Archaeology			200
+Mogu Archaeology Fragment					Archaeology			200
+Nerubian Archaeology Fragment				Archaeology			200
+Night Elf Archaeology Fragment				Archaeology			200
+Ogre Archaeology Fragment					Archaeology			250
+Orc Archaeology Fragment					Archaeology			200
+Pandaren Archaeology Fragment				Archaeology			200
+Tol'vir Archaeology Fragment				Archaeology			200
+Troll Archaeology Fragment					Archaeology			200
+Vrykul Archaeology Fragment					Archaeology			200
+Demonic Archaeology Fragment				Archaeology			200
+Highborne Archaeology Fragment				Archaeology			200
+Highmountain Tauren Archaeology Fragment	Archaeology			200
 ]]

@@ -1,3 +1,6 @@
+v4.07
+- Added Legion Archaeology Currencies: Demonic Archaeology Fragment, Highborne Archaeology Fragment & Highmountain Tauren Archaeology Fragment
+
 v4.06
 - Added Legion Currencies: Lingering Soul Fragment & Wakening Essence
 - Code cleanup
