@@ -1,8 +1,12 @@
+v4.06
+- Added Legion Currencies: Lingering Soul Fragment & Wakening Essence
+- Code cleanup
+
 v4.05
-- Added Currencies: Coins of Air
+- Added Legion Currencies: Coins of Air
 
 v4.04
-- Added Currencies: Veiled Argunite 
+- Added Legion Currencies: Veiled Argunite 
 
 v4.03
 - Added Currencies: Brawler's Gold, Echoes of Battle, Echoes of Domination, Felessence & Legionfall War Supplies

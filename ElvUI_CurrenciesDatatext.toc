@@ -3,7 +3,7 @@
 ## Author: Herat (Original Author Alexstraszaa)
 ## URL: http://www.curseforge.com/projects/99116/
 ## Notes: A datatext for currencies that is highly customizable, Includes a tooltip for hidden currencies
-## Version: 4.05
+## Version: 4.06
 ## RequiredDeps: ElvUI
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
