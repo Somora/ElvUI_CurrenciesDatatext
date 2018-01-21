@@ -1295,7 +1295,7 @@ local function OnEnter(self)
 			-- Nethershard
 			if not GetOption("Legion") or not GetOption(1226) then
 				if getCurinfo(1226)[7] then
-					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1226)[2]).." "..getCurinfo(1226)[1], getCurinfo(1226)[3].."/"..getCurinfo(1226)[6], r1, g1, b1, r1, g1, b1)
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1226)[2]).." "..getCurinfo(1226)[1], getCurinfo(1226)[3], r1, g1, b1, r1, g1, b1)
 				end
 			end
 			
@@ -1358,7 +1358,7 @@ local function OnEnter(self)
 			-- Wakening Essence
 			if not GetOption("Legion") or not GetOption(1533) then
 				if getCurinfo(1533)[7] then
-					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1533)[2]).." "..getCurinfo(1533)[1], getCurinfo(1533)[3].."/"..getCurinfo(1533)[6], r1, g1, b1, r1, g1, b1)
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1533)[2]).." "..getCurinfo(1533)[1], getCurinfo(1533)[3], r1, g1, b1, r1, g1, b1)
 				end	
 			end
 			
