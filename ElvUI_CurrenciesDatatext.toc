@@ -1,9 +1,9 @@
-## Interface: 70300
+## Interface: 80000
 ## Title: |cff1784d1ElvUI|r |cffded181Currencies Datatext|r
 ## Author: Herat (Original Author Alexstraszaa)
 ## URL: http://www.curseforge.com/projects/99116/
 ## Notes: A datatext for currencies that is highly customizable, Includes a tooltip for hidden currencies
-## Version: 4.07
+## Version: 4.08
 ## RequiredDeps: ElvUI
 ## DefaultState: Enabled
 ## LoadOnDemand: 0

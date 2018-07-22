@@ -1,3 +1,6 @@
+v4.08
+- Updated TOC for BfA
+
 v4.07
 - Added Legion Archaeology Currencies: Demonic Archaeology Fragment, Highborne Archaeology Fragment & Highmountain Tauren Archaeology Fragment
 
