@@ -11,6 +11,7 @@ local version = GetAddOnMetadata("ElvUI_CurrenciesDatatext", "Version")
 
 local currencies = {
 --		[1155] = true, 
+1565, 1710, 1580, 1560,	1587,																			-- Battle for Azeroth
 1155, 1275, 1299, 1356, 1357, 1355, 1342, 1226, 1220, 1273, 1154, 1149, 1268, 1508, 1416, 1314, 1533,	-- Legion
 823, 944, 980, 824, 1101, 1129, 994, 																	-- Warlords of Draenor - 1
 614, 615, 1166, 1191, 																					-- Dungeon & Raid - 8
@@ -35,6 +36,7 @@ if elvProfileDB["ElvUI_Currencies"] ~= nil then
 		ElvCharacterDB["ElvUI_Currencies"]["hidett"] = elvProfileDB["ElvUI_Currencies"]["hidett"] or false
 		
 		-- Headers
+		ElvCharacterDB["ElvUI_Currencies"]["BfA"]    = elvProfileDB["ElvUI_Currencies"][L["BfA"]]["visible"] or false
 		ElvCharacterDB["ElvUI_Currencies"]["Legion"] = elvProfileDB["ElvUI_Currencies"][L["Legion"]]["visible"] or false 
 		ElvCharacterDB["ElvUI_Currencies"]["WoD"]    = elvProfileDB["ElvUI_Currencies"][L["WoD"]]["visible"] or false 
 		ElvCharacterDB["ElvUI_Currencies"]["D&R"]    = elvProfileDB["ElvUI_Currencies"][L["D&R"]]["visible"] or false
@@ -45,6 +47,13 @@ if elvProfileDB["ElvUI_Currencies"] ~= nil then
 		ElvCharacterDB["ElvUI_Currencies"]["Arch"]   = elvProfileDB["ElvUI_Currencies"][L["Arch"]]["visible"] or false
 		
 		-- Currencies
+		-- Battle for Azeroth
+		ElvCharacterDB["ElvUI_Currencies"][1565]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1565]["visible"]  or true -- Rich Azerite Fragment
+		ElvCharacterDB["ElvUI_Currencies"][1710]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1710]["visible"]  or true -- Seafarer's Dubloon
+		ElvCharacterDB["ElvUI_Currencies"][1580]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1580]["visible"]  or true -- Seal Of Wartorn Fate
+		ElvCharacterDB["ElvUI_Currencies"][1560]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1560]["visible"]  or true -- War Resources
+		ElvCharacterDB["ElvUI_Currencies"][1587]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1587]["visible"]  or true -- War Supplies
+		
 		-- Legion
 		ElvCharacterDB["ElvUI_Currencies"][1155]  = elvProfileDB["ElvUI_Currencies"][L["Legion"]][1155]["visible"]  or true -- Ancient Mana
 		ElvCharacterDB["ElvUI_Currencies"][1275]  = elvProfileDB["ElvUI_Currencies"][L["Legion"]][1275]["visible"]  or true -- Curious Coin
@@ -123,6 +132,8 @@ if elvProfileDB["ElvUI_Currencies"] ~= nil then
 		ElvCharacterDB["ElvUI_Currencies"][828]  = elvProfileDB["ElvUI_Currencies"][L["Arch"]][828]["visible"] or true -- Ogre Archaeology Fragment
 		
 		-- Clean-up
+		elvProfileDB["ElvUI_Currencies"][L["BfA"]]  = nil
+		elvProfileDB["ElvUI_Currencies"][L["Legion"]]  = nil
 		elvProfileDB["ElvUI_Currencies"][L["WoD"]]  = nil
 		elvProfileDB["ElvUI_Currencies"][L["D&R"]]  = nil
 		elvProfileDB["ElvUI_Currencies"][L["PvP"]]  = nil
@@ -147,6 +158,7 @@ V["ElvUI_Currencies"] = {
 	["hidett"] = false,
 	
 	-- Headers
+	["BfA"] = false,
 	["Legion"] = false,
 	["WoD"] = false,
 	["D&R"] = false,
@@ -157,6 +169,13 @@ V["ElvUI_Currencies"] = {
 	["Arch"] = false,
 	
 	-- Currencies
+	-- Battle for Azeroth
+	[1565] = true, -- Rich Azerite Fragment
+	[1710] = true, -- Seafarer's Dubloon
+	[1580] = true, -- Seal of Wartorn Fate
+	[1560] = true, -- War Resources
+	[1587] = true, -- War Supplies
+	
 	-- Legion
 	[1155] = true, -- Ancient Mana
 	[1275] = true, -- Curious Coin
@@ -309,6 +328,18 @@ end
 local menu = {
 	{ text = L["menu header"], isTitle = true , notCheckable = true },
 	
+	-- Battle for Azeroth
+	{ text = L["Battle for Azeroth"], hasArrow = true, notCheckable = true,
+        menuList = {
+			{ text = L["Show BfA Currencies"], checked = function() return GetOption("BfA") end, func = function() ToggleOption("BfA") end },
+			{ text = ' - '..L["Show"]..' '..L["Rich Azerite Fragment"], checked = function() return GetOption(1565) end, func = function() ToggleOption(1565) end },
+			{ text = ' - '..L["Show"]..' '..L["Seafarer's Dubloon"], checked = function() return GetOption(1710) end, func = function() ToggleOption(1710) end },
+			{ text = ' - '..L["Show"]..' '..L["Seal of Wartorn Fate"], checked = function() return GetOption(1580) end, func = function() ToggleOption(1580) end },
+			{ text = ' - '..L["Show"]..' '..L["War Resources"], checked = function() return GetOption(1560) end, func = function() ToggleOption(1560) end },
+			{ text = ' - '..L["Show"]..' '..L["War Supplies"], checked = function() return GetOption(1587) end, func = function() ToggleOption(1587) end },
+		} 
+    },
+	
 	-- Legion
 	{ text = L["Legion"], hasArrow = true, notCheckable = true,
         menuList = {
@@ -459,6 +490,72 @@ local function OnEvent(self, event, ...)
 		if isDiscovered then
 			if(i ~= 1) then _text = "  " else _text = "" end
 			local texture = format('|T%s:14:14:0:0:64:64:4:60:4:60|t', icon)
+			
+			-- Battle for Azeroth --
+			-- Rich Azerite Fragment
+			if index == 1565 and (GetOption(1565) and GetOption("BfA")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
+			
+			-- Seafarer's Dubloon					
+			if index == 1710 and (GetOption(1710) and GetOption("BfA")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
+			
+			-- Seal of Wartorn Fate					
+			if index == 1580 and (GetOption(1580) and GetOption("BfA")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end						
+			
+			-- War Resources					
+			if index == 1560 and (GetOption(1560) and GetOption("BfA")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
+			
+			-- War Supplies					
+			if index == 1587 and (GetOption(1587) and GetOption("BfA")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
 			
 			-- Legion --
 			-- Ancient Mana
@@ -1274,9 +1371,9 @@ local function OnEvent(self, event, ...)
 				displayString = displayString..str
 			end
 		end
-	end	
+	end
 	if self then
-		if displayString == '' or (not GetOption("Legion") and not GetOption("WoD") and not GetOption("D&R") and not GetOption("PvP") and not GetOption("MoP") and not GetOption("Cata") and not GetOption("Misc") and not GetOption("Arch")) then 
+		if displayString == '' or (not GetOption("BfA") and not GetOption("Legion") and not GetOption("WoD") and not GetOption("D&R") and not GetOption("PvP") and not GetOption("MoP") and not GetOption("Cata") and not GetOption("Misc") and not GetOption("Arch")) then 
 			displayString = tostring("ElvUI ".._hex..L["Currencies"].."|r") end
 		self.text:SetFormattedText(displayString)
 	end
@@ -1295,8 +1392,54 @@ local function OnEnter(self)
 		local r1, g1, b1, r2, g2, b2 = HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b;
 		DT:SetupTooltip(self)
 		
+		-- Battle for Azeroth --
+		if UnitLevel('player') >= 120 then
+			if not GetOption("BfA") or (not GetOption(1565) and getCurinfo(1565)[7]) or (not GetOption(1710) and getCurinfo(1710)[7]) or (not GetOption(1580) and getCurinfo(1580)[7]) or (not GetOption(1560) and getCurinfo(1560)[7]) or (not GetOption(1587) and getCurinfo(1587)[7]) then
+				DT.tooltip:AddLine(L["Battle for Azeroth"], r2, g2, b2)
+			end
+			
+			-- Rich Azerite Fragment
+			if not GetOption("BfA") or not GetOption(1565) then
+				if getCurinfo(1565)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1565)[2]).." "..getCurinfo(1565)[1], getCurinfo(1565)[3].."/"..getCurinfo(1565)[6], r1, g1, b1, r1, g1, b1)
+				end
+			end
+			
+			-- Seafarer's Dubloon
+			if not GetOption("BfA") or not GetOption(1710) then
+				if getCurinfo(1710)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1710)[2]).." "..getCurinfo(1710)[1], getCurinfo(1710)[3], r1, g1, b1, r1, g1, b1)
+				end
+			end
+			
+			-- Seal of Wartorn Fate
+			if not GetOption("BfA") or not GetOption(1580) then
+				if getCurinfo(1580)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1580)[2]).." "..getCurinfo(1580)[1], getCurinfo(1580)[3].."/"..getCurinfo(1580)[6], r1, g1, b1, r1, g1, b1)
+				end
+			end
+			
+			-- War Resources
+			if not GetOption("BfA") or not GetOption(1560) then
+				if getCurinfo(1560)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1560)[2]).." "..getCurinfo(1560)[1], getCurinfo(1560)[3], r1, g1, b1, r1, g1, b1)
+				end
+			end
+			
+			-- War Supplies
+			if not GetOption("BfA") or not GetOption(1587) then
+				if getCurinfo(1587)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1587)[2]).." "..getCurinfo(1587)[1], getCurinfo(1587)[3].."/"..getCurinfo(1587)[6], r1, g1, b1, r1, g1, b1)
+				end
+			end			
+			
+			if not GetOption("BfA") or (not GetOption(1565) and getCurinfo(1565)[7]) or (not GetOption(1710) and getCurinfo(1710)[7]) or (not GetOption(1580) and getCurinfo(1580)[7]) or (not GetOption(1560) and getCurinfo(1560)[7]) or (not GetOption(1587) and getCurinfo(1587)[7]) then
+				DT.tooltip:AddLine("  ")
+			end
+		end
+		
 		-- Legion --
-		if UnitLevel('player') >= 100 then
+		if UnitLevel('player') >= 110 then
 			if not GetOption("Legion") or (not GetOption(1155) and getCurinfo(1155)[7]) or (not GetOption(1275) and getCurinfo(1275)[7]) or (not GetOption(1299) and getCurinfo(1299)[7]) or (not GetOption(1356) and getCurinfo(1356)[7]) or (not GetOption(1357) and getCurinfo(1357)[7]) or (not GetOption(1355) and getCurinfo(1355)[7]) or (not GetOption(1342) and getCurinfo(1342)[7]) or (not GetOption(1226) and getCurinfo(1226)[7]) or (not GetOption(1220) and getCurinfo(1220)[7]) or (not GetOption(1273) and getCurinfo(1273)[7]) or (not GetOption(1154) and getCurinfo(1154)[7]) or (not GetOption(1149) and getCurinfo(1149)[7]) or (not GetOption(1268) and getCurinfo(1268)[7]) or (not GetOption(1508) and getCurinfo(1508)[7]) or (not GetOption(1416) and getCurinfo(1416)[7]) or (not GetOption(1314) and getCurinfo(1314)[7]) or (not GetOption(1533) and getCurinfo(1533)[7]) then
 				DT.tooltip:AddLine(L["Legion"], r2, g2, b2)
 			end
@@ -1860,6 +2003,14 @@ E["valueColorUpdateFuncs"][ValueColorUpdate] = true
 DT:RegisterDatatext('Currencies', {'PLAYER_LOGIN', 'PLAYER_ENTERING_WORLD', 'PLAYER_MONEY', 'PLAYER_TRADE_MONEY', 'TRADE_MONEY_CHANGED', 'SPELLS_CHANGED'}, OnEvent, nil, OnClick, OnEnter) hooksecurefunc("BackpackTokenFrame_Update", function(...) OnEvent(lastPanel) end)
 
 --[[
+Battle for Azeroth
+------------------
+Rich Azerite Fragment					BfA 1000
+Seafarer's Dubloon						BfA
+Seal of Wartorn Fate					BfA 5
+War Resources							BfA 
+War Supplies							BfA 1000
+
 Legion
 ------
 Ancient Mana							Legion 300 (can be increased in-game)

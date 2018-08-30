@@ -1,3 +1,6 @@
+v4.09
+- Added Battle for Azeroth Currencies: Rich Azerite Fragment, Seafarer's Dubloon, Seal of Wartorn Fate, War Resources & War Supplies
+
 v4.08
 - Updated TOC for BfA
 
