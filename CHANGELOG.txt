@@ -1,3 +1,7 @@
+v4.11
+- Added Battle for Azeroth Currencies: 7th Legion Service Medal, Honorbound Service Medal & Titan Residuum
+- Code cleanup
+
 v4.10
 - Updated TOC for BfA 8.1
 

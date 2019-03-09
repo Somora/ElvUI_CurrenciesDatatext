@@ -11,7 +11,7 @@ local version = GetAddOnMetadata("ElvUI_CurrenciesDatatext", "Version")
 
 local currencies = {
 --		[1155] = true, 
-1565, 1710, 1580, 1560,	1587,																			-- Battle for Azeroth
+1565, 1710, 1580, 1560,	1587, 1717,	1716, 1718,															-- Battle for Azeroth
 1155, 1275, 1299, 1356, 1357, 1355, 1342, 1226, 1220, 1273, 1154, 1149, 1268, 1508, 1416, 1314, 1533,	-- Legion
 823, 944, 980, 824, 1101, 1129, 994, 																	-- Warlords of Draenor - 1
 614, 615, 1166, 1191, 																					-- Dungeon & Raid - 8
@@ -48,6 +48,9 @@ if elvProfileDB["ElvUI_Currencies"] ~= nil then
 		
 		-- Currencies
 		-- Battle for Azeroth
+		ElvCharacterDB["ElvUI_Currencies"][1718]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1718]["visible"]  or true -- Titan Residuum
+		ElvCharacterDB["ElvUI_Currencies"][1716]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1716]["visible"]  or true -- Honorbound Service Medal
+		ElvCharacterDB["ElvUI_Currencies"][1717]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1717]["visible"]  or true -- 7th Legion Service Medal
 		ElvCharacterDB["ElvUI_Currencies"][1565]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1565]["visible"]  or true -- Rich Azerite Fragment
 		ElvCharacterDB["ElvUI_Currencies"][1710]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1710]["visible"]  or true -- Seafarer's Dubloon
 		ElvCharacterDB["ElvUI_Currencies"][1580]  = elvProfileDB["ElvUI_Currencies"][L["BfA"]][1580]["visible"]  or true -- Seal Of Wartorn Fate
@@ -170,6 +173,9 @@ V["ElvUI_Currencies"] = {
 	
 	-- Currencies
 	-- Battle for Azeroth
+	[1718] = true, -- Titan Residuum
+	[1716] = true, -- Honorbound Service Medal
+	[1717] = true, -- 7th Legion Service Medal
 	[1565] = true, -- Rich Azerite Fragment
 	[1710] = true, -- Seafarer's Dubloon
 	[1580] = true, -- Seal of Wartorn Fate
@@ -270,7 +276,8 @@ V["ElvUI_Currencies"] = {
 	[1173] = true, -- Highmountain Tauren Archaeology Fragment
 }
 
-StaticPopupDialogs["translatorsNeeded"] = {
+--[[ 
+    StaticPopupDialogs["translatorsNeeded"] = {
 	text = "To give full localization-support,\nI'm looking for translators for the following languages:\n \nChinese (zhCN), Korean (koKR),\nRussian (ruRU), Taiwanese (zhTW)\n \nIf you speak one or more of these languages fluently as well as English, please file an \"Enchancement\"-ticket at:",
 	button1 = "Close",
 	hasEditBox = 1,
@@ -288,6 +295,7 @@ StaticPopupDialogs["translatorsNeeded"] = {
 	hideOnEscape = true,
 	preferredIndex = 3,
 }
+]]
 
 StaticPopupDialogs["CurrenciesReloadUI"] = {
 	text = L["AskReloadNow"],
@@ -332,6 +340,9 @@ local menu = {
 	{ text = L["Battle for Azeroth"], hasArrow = true, notCheckable = true,
         menuList = {
 			{ text = L["Show BfA Currencies"], checked = function() return GetOption("BfA") end, func = function() ToggleOption("BfA") end },
+			{ text = ' - '..L["Show"]..' '..L["Titan Residuum"], checked = function() return GetOption(1718) end, func = function() ToggleOption(1718) end },
+			{ text = ' - '..L["Show"]..' '..L["Honorbound Service Medal"], checked = function() return GetOption(1716) end, func = function() ToggleOption(1716) end },
+			{ text = ' - '..L["Show"]..' '..L["7th Legion Service Medal"], checked = function() return GetOption(1717) end, func = function() ToggleOption(1717) end },
 			{ text = ' - '..L["Show"]..' '..L["Rich Azerite Fragment"], checked = function() return GetOption(1565) end, func = function() ToggleOption(1565) end },
 			{ text = ' - '..L["Show"]..' '..L["Seafarer's Dubloon"], checked = function() return GetOption(1710) end, func = function() ToggleOption(1710) end },
 			{ text = ' - '..L["Show"]..' '..L["Seal of Wartorn Fate"], checked = function() return GetOption(1580) end, func = function() ToggleOption(1580) end },
@@ -492,6 +503,45 @@ local function OnEvent(self, event, ...)
 			local texture = format('|T%s:14:14:0:0:64:64:4:60:4:60|t', icon)
 			
 			-- Battle for Azeroth --
+			-- Titan Residuum
+			if index == 1718 and (GetOption(1718) and GetOption("BfA")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
+			
+			-- Honorbound Service Medal
+			if index == 1716 and (GetOption(1716) and GetOption("BfA")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
+			
+			-- 7th Legion Service Medal
+			if index == 1717 and (GetOption(1717) and GetOption("BfA")) then
+				local str
+				if GetOption("icons") then
+					str = tostring(_text..texture..":"..ColorValue(totalMax, count)..count.."|r")
+				else
+					words = { strsplit(" ", name) }
+					for _, word in ipairs(words) do _text = _text..string.sub(word,1,1) end
+					str = tostring(_text..":"..ColorValue(totalMax, count)..count.."|r")
+				end
+				displayString = displayString..str
+			end
+			
 			-- Rich Azerite Fragment
 			if index == 1565 and (GetOption(1565) and GetOption("BfA")) then
 				local str
@@ -1394,8 +1444,29 @@ local function OnEnter(self)
 		
 		-- Battle for Azeroth --
 		if UnitLevel('player') >= 120 then
-			if not GetOption("BfA") or (not GetOption(1565) and getCurinfo(1565)[7]) or (not GetOption(1710) and getCurinfo(1710)[7]) or (not GetOption(1580) and getCurinfo(1580)[7]) or (not GetOption(1560) and getCurinfo(1560)[7]) or (not GetOption(1587) and getCurinfo(1587)[7]) then
+			if not GetOption("BfA") or (not GetOption(1718) and getCurinfo(1718)[7]) or (not GetOption(1565) and getCurinfo(1565)[7]) or (not GetOption(1710) and getCurinfo(1710)[7]) or (not GetOption(1580) and getCurinfo(1580)[7]) or (not GetOption(1560) and getCurinfo(1560)[7]) or (not GetOption(1587) and getCurinfo(1587)[7]) or (not GetOption(1717) and getCurinfo(1717)[7]) or (not GetOption(1716) and getCurinfo(1716)[7]) then
 				DT.tooltip:AddLine(L["Battle for Azeroth"], r2, g2, b2)
+			end
+			
+			-- Titan Residuum
+			if not GetOption("BfA") or not GetOption(1718) then
+				if getCurinfo(1718)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1718)[2]).." "..getCurinfo(1718)[1], getCurinfo(1718)[3], r1, g1, b1, r1, g1, b1)
+				end
+			end
+			
+			-- Honorbound Service Medal
+			if not GetOption("BfA") or not GetOption(1716) then
+				if getCurinfo(1716)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1716)[2]).." "..getCurinfo(1716)[1], getCurinfo(1716)[3], r1, g1, b1, r1, g1, b1)
+				end
+			end
+			
+			-- 7th Legion Service Medal
+			if not GetOption("BfA") or not GetOption(1717) then
+				if getCurinfo(1717)[7] then
+					DT.tooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t', getCurinfo(1717)[2]).." "..getCurinfo(1717)[1], getCurinfo(1717)[3], r1, g1, b1, r1, g1, b1)
+				end
 			end
 			
 			-- Rich Azerite Fragment
@@ -1433,7 +1504,7 @@ local function OnEnter(self)
 				end
 			end			
 			
-			if not GetOption("BfA") or (not GetOption(1565) and getCurinfo(1565)[7]) or (not GetOption(1710) and getCurinfo(1710)[7]) or (not GetOption(1580) and getCurinfo(1580)[7]) or (not GetOption(1560) and getCurinfo(1560)[7]) or (not GetOption(1587) and getCurinfo(1587)[7]) then
+			if not GetOption("BfA") or (not GetOption(1718) and getCurinfo(1718)[7]) or (not GetOption(1565) and getCurinfo(1565)[7]) or (not GetOption(1710) and getCurinfo(1710)[7]) or (not GetOption(1580) and getCurinfo(1580)[7]) or (not GetOption(1560) and getCurinfo(1560)[7]) or (not GetOption(1587) and getCurinfo(1587)[7]) or (not GetOption(1717) and getCurinfo(1717)[7]) or (not GetOption(1716) and getCurinfo(1716)[7]) then
 				DT.tooltip:AddLine("  ")
 			end
 		end
@@ -2005,6 +2076,9 @@ DT:RegisterDatatext('Currencies', {'PLAYER_LOGIN', 'PLAYER_ENTERING_WORLD', 'PLA
 --[[
 Battle for Azeroth
 ------------------
+Titan Residuum							BfA
+Honorbound Service Medal				BfA
+7th Legion Service Medal				BfA 
 Rich Azerite Fragment					BfA 1000
 Seafarer's Dubloon						BfA
 Seal of Wartorn Fate					BfA 5
